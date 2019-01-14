@@ -2,13 +2,15 @@
   <%= link_to("Add a job", new_admin_job_path, class: "btn btn-default") %>
 </div>
 <br>
-<table class="table table-hover">
+<table class="table table-boldered table-striped custab">
   <thead>
     <tr>
-      <td>Status | Title</td>
-      <td>Content</td>
-      <td>Last Update</td>
-      <td colspan="2"></td>
+      <td>职缺</td>
+      <td>履历数量</td>
+      <td>薪资下限</td>
+      <td>薪资上限</td>
+      <td>管理选项</td>
+      <td>刊登时间</td>
     </tr>
   </thead>
   <tbody>
@@ -18,17 +20,19 @@
           <%= render_job_status(job) %>
           <%= link_to(job.title, admin_job_path(job)) %>
         </td>
-        <td><%= job.content %></td>
-        <td><%= job.created_at %></td>
+        <td><%= link_to(job.resumes.count, admin_job_resumes_path(job)) %></td>
+        <td><%= job.wage_lower_bound %></td>
+        <td><%= job.wage_upper_bound %></td>
         <td>
-          <%= link_to("Edit", edit_admin_job_path(job)) %> |
-          <%= link_to("Delete", admin_job_path(job), method: :delete, data: {confirm: "Are you sure?"}) %>
+          <%= link_to("Edit", edit_admin_job_path(job), class: "btn btn-xs btn-info") %> |
+          <%= link_to("Delete", admin_job_path(job), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-xs btn-danger") %> |
           <% if job.is_hidden %>
-            <%= link_to("Publish", publish_admin_job_path(job), method: :post, class: "btn btn-xs btn-danger") %>
+            <%= link_to("Publish", publish_admin_job_path(job), method: :post, class: "btn btn-xs btn-success") %>
           <% else %>
-            <%= link_to("Hide", hide_admin_job_path(job), method: :post, class: "btn btn-xs btn-default") %>
+            <%= link_to("Hide", hide_admin_job_path(job), method: :post, class: "btn btn-xs btn-warning") %>
           <% end %>
         </td>
+        <td><%= job.created_at %></td>
       </tr>
     <% end %>
   </tbody>
